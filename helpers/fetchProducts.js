@@ -1,5 +1,16 @@
-const fetchProducts = () => {
-  // seu código aqui
+// global.fetch = require('node-fetch'); // ativar para exibir no vscode, comentar para exibir no browser
+
+const fetchProducts = async () => { // requisito 1
+  try { // usando try e catch pois função assincronar pode dar erro
+    const busca = 'computador'; // termo especificado pelo requisito
+    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${busca}`; // link para busca de dados
+    const link = await fetch(url); // guardar requisição (uso de await para aguardar promise)
+    const resultado = await link.json(); // pega o resultado acima e faz a parada com json que não entendi ainda
+    const produtos = resultado.results; // pega a chave resultados, do objeto retornado
+    return produtos; // o retorno é o array de produtos
+  } catch (erro) { // caso dê erro
+    return (`isso: ${erro}`); // mensagem para erro
+  }
 };
 
 if (typeof module !== 'undefined') {
@@ -7,3 +18,5 @@ if (typeof module !== 'undefined') {
     fetchProducts,
   };
 }
+
+console.log(fetchProducts());

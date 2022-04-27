@@ -1,3 +1,5 @@
+// const { fetchProducts } = require('./helpers/fetchProducts');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,4 +42,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+const mostraProdutos = async () => { // requisito 1
+  const items = document.querySelector('.items'); // identifica o elemento com a classe items
+  const lista = await fetchProducts(); // guarda o retorno da função criada no outro arquivo
+  lista.map((alvo) => {
+    const { id: sku, title: name, thumbnail: image } = alvo; // desestrutura para colocar os nomes que estão na função acima
+    return items.appendChild(createProductItemElement({ sku, name, image })); // chama a função para gerar os items na página, como filhos do elemento de classe items
+  });
+};
+
+window.onload = () => { mostraProdutos(); }; // chama a função no carregamento da página
