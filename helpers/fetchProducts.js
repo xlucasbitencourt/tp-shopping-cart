@@ -19,4 +19,4 @@ if (typeof module !== 'undefined') {
   };
 }
 
-console.log(fetchProducts());
+// console.log(fetchProducts());
