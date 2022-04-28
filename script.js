@@ -20,8 +20,19 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const valorCarrinho = () => { // requisito 5
+  const totalPrice = document.querySelector('.total-price'); // local onde será exibido o valor na página
+  const itens = document.querySelectorAll('.cart__item'); // constante para pegar itens do carrinho
+  const total = Array.from(itens) // total é uma array dos elementos de itens
+  .reduce((a, item) => a + (parseFloat(item.innerHTML.split('|')[2] // tira os dados numéricos para compor o valor
+  .replace(' PRICE: $', ''))), 0); // substitui o proce para deixar o valor numérico
+  // .toFixed(2); // mostra somente 2 casas decimais
+  totalPrice.innerText = total; // coloca o valor na página
+};
+
 function cartItemClickListener(event) { // requisito 3
   event.target.remove(); // remove o local onde foi clicado (o escutador está na função abaixo)
+  valorCarrinho(); // requisito 5
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -39,6 +50,7 @@ const adicionaCarrinho = async (alvo) => { // requisito 2 jogado pra cima por ca
   const { id: sku, title: name, price: salePrice } = resultado; // muda o nome das chaves
   const itemCarrinho = createCartItemElement({ sku, name, salePrice }); // cria os items do carrinho
   cartItems.appendChild(itemCarrinho); // adiciona na página
+  valorCarrinho(); // requisito 5
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -61,7 +73,10 @@ const mostraProdutos = async (busca) => { // requisito 1
     const { id: sku, title: name, thumbnail: image } = alvo; // desestrutura para colocar os nomes que estão na função acima
     return items.appendChild(createProductItemElement({ sku, name, image })); // chama a função para gerar os items na página, como filhos do elemento de classe items
   });
+  valorCarrinho(); // requisito 5
 };
 
-// requisito 1
-window.onload = () => { mostraProdutos('computador'); }; // chama a função no carregamento da página
+window.onload = () => { // chama a função no carregamento da página
+  mostraProdutos('computador'); // requisito 1
+  valorCarrinho(); // requisito 5
+ }; 
