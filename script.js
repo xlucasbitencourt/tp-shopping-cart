@@ -41,7 +41,7 @@ const valorCarrinho = () => { // requisito 5
 function cartItemClickListener(event) { // requisito 3
   event.target.remove(); // remove o local onde foi clicado (o escutador está na função abaixo)
   valorCarrinho(); // requisito 5
-  saveCartItems(cartItems); // requisito 4 - salva o carrinho cada vez que remover item
+  saveCartItems(cartItems.innerHTML); // requisito 4 - salva o carrinho cada vez que remover item
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -60,7 +60,7 @@ const adicionaCarrinho = async (alvo) => { // requisito 2 jogado pra cima por ca
   const itemCarrinho = createCartItemElement({ sku, name, salePrice }); // cria os items do carrinho
   cartItems.appendChild(itemCarrinho); // adiciona na página
   valorCarrinho(); // requisito 5
-  saveCartItems(cartItems); // requisito 4 - salva o carrinho a caca vez que adicionar item ao carrinho
+  saveCartItems(cartItems.innerHTML); // requisito 4 - salva o carrinho a caca vez que adicionar item ao carrinho
 };
 
 const restaura = () => { // requisito 4
