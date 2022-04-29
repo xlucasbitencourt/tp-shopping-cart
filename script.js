@@ -1,14 +1,5 @@
-// const { fetchProducts } = require('./helpers/fetchProducts');
-
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
-// const saveCartItems = require("./helpers/saveCartItems");
-
-// const { fetchItem } = require("./helpers/fetchItem");
-
 const cartItems = document.querySelector('.cart__items'); // adiciona elemento de classe cart__items
+const loading = document.querySelector('.loading'); // pega o elemento carregando da página
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -85,6 +76,7 @@ function createProductItemElement({ sku, name, image }) {
 const mostraProdutos = async (busca) => { // requisito 1
   const items = document.querySelector('.items'); // identifica o elemento com a classe items
   const lista = await fetchProducts(busca); // guarda o retorno da função criada no outro arquivo
+  loading.remove(); // requisito 7 - remove a div carregando
   lista.results.forEach((alvo) => {
     const { id: sku, title: name, thumbnail: image } = alvo; // desestrutura para colocar os nomes que estão na função acima
     return items.appendChild(createProductItemElement({ sku, name, image })); // chama a função para gerar os items na página, como filhos do elemento de classe items
