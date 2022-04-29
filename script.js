@@ -92,6 +92,13 @@ const mostraProdutos = async (busca) => { // requisito 1
   valorCarrinho(); // requisito 5
 };
 
+// requisito 6
+document.querySelector('.empty-cart').addEventListener('click', () => { // pega o botao de esvaziar carrinho da página, e já coloca um escutador para fazer a função de apagar
+  cartItems.innerText = ''; // todo o texto é substituido por uma string vazia
+  valorCarrinho(); // requisito 5 - atualiza o valor após limpar o carrinho
+  saveCartItems(cartItems.innerHTML); // requisito 4 - salva o carrino após limpá-lo
+});
+
 window.onload = () => { // chama a função no carregamento da página
   mostraProdutos('computador'); // requisito 1
   valorCarrinho(); // requisito 5
