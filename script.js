@@ -1,6 +1,14 @@
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+
+// const saveCartItems = require("./helpers/saveCartItems");
+
 // const { fetchItem } = require("./helpers/fetchItem");
+
+const cartItems = document.querySelector('.cart__items'); // adiciona elemento de classe cart__items
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -22,9 +30,9 @@ function getSkuFromProductItem(item) {
 
 const valorCarrinho = () => { // requisito 5
   const totalPrice = document.querySelector('.total-price'); // local onde será exibido o valor na página
-  const itens = document.querySelectorAll('.cart__item'); // constante para pegar itens do carrinho
-  const total = Array.from(itens) // total é uma array dos elementos de itens
-  .reduce((a, item) => a + (parseFloat(item.innerHTML.split('|')[2] // tira os dados numéricos para compor o valor
+  const item = document.querySelectorAll('.cart__item'); // constante para pegar itens do carrinho (tive que criar outra sei lá porque caralho)
+  const total = Array.from(item) // total é uma array dos elementos produtos no carrinho
+  .reduce((a, pro) => a + (parseFloat(pro.innerHTML.split('|')[2] // tira os dados numéricos para compor o valor
   .replace(' PRICE: $', ''))), 0); // substitui o proce para deixar o valor numérico
   // .toFixed(2); // mostra somente 2 casas decimais
   totalPrice.innerText = total; // coloca o valor na página
@@ -33,6 +41,7 @@ const valorCarrinho = () => { // requisito 5
 function cartItemClickListener(event) { // requisito 3
   event.target.remove(); // remove o local onde foi clicado (o escutador está na função abaixo)
   valorCarrinho(); // requisito 5
+  saveCartItems(cartItems); // requisito 4 - salva o carrinho cada vez que remover item
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -44,13 +53,20 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const adicionaCarrinho = async (alvo) => { // requisito 2 jogado pra cima por causa da bosta do lint
-  const cartItems = document.querySelector('.cart__items'); // adiciona elemento de classe cart__items
+ // const cartItems = document.querySelector('.cart__items'); // adiciona elemento de classe cart__items
   const id = getSkuFromProductItem(alvo.target.parentNode); // pega o id através da utra função
   const resultado = await fetchItem(id); // pega a lista da função fetchItem
   const { id: sku, title: name, price: salePrice } = resultado; // muda o nome das chaves
   const itemCarrinho = createCartItemElement({ sku, name, salePrice }); // cria os items do carrinho
   cartItems.appendChild(itemCarrinho); // adiciona na página
   valorCarrinho(); // requisito 5
+  saveCartItems(cartItems); // requisito 4 - salva o carrinho a caca vez que adicionar item ao carrinho
+};
+
+const restaura = () => { // requisito 4
+  cartItems.innerHTML = getSavedCartItems(); // pega os itens salvos no local storage e guarda na página
+  const cart = document.querySelectorAll('.cart__item'); // atribui a constante aos itens com a classe cart__item
+  cart.forEach((a) => a.addEventListener('click', cartItemClickListener)); // coloca o escutador para conseguir exckuir o item do carrinho
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -79,4 +95,5 @@ const mostraProdutos = async (busca) => { // requisito 1
 window.onload = () => { // chama a função no carregamento da página
   mostraProdutos('computador'); // requisito 1
   valorCarrinho(); // requisito 5
+  restaura(); // // requisito 4 carrega o carrinho salvo no carregamento da página
  }; 
