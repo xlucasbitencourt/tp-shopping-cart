@@ -35,10 +35,11 @@ function cartItemClickListener(event) { // requisito 3
   saveCartItems(cartItems.innerHTML); // requisito 4 - salva o carrinho cada vez que remover item
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerHTML = `<img src=${thumbnail} /> SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  // li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -47,8 +48,8 @@ const adicionaCarrinho = async (alvo) => { // requisito 2 jogado pra cima por ca
  // const cartItems = document.querySelector('.cart__items'); // adiciona elemento de classe cart__items
   const id = getSkuFromProductItem(alvo.target.parentNode); // pega o id através da utra função
   const resultado = await fetchItem(id); // pega a lista da função fetchItem
-  const { id: sku, title: name, price: salePrice } = resultado; // muda o nome das chaves
-  const itemCarrinho = createCartItemElement({ sku, name, salePrice }); // cria os items do carrinho
+  const { id: sku, title: name, price: salePrice, thumbnail } = resultado; // muda o nome das chaves
+  const itemCarrinho = createCartItemElement({ sku, name, salePrice, thumbnail }); // cria os items do carrinho
   cartItems.appendChild(itemCarrinho); // adiciona na página
   valorCarrinho(); // requisito 5
   saveCartItems(cartItems.innerHTML); // requisito 4 - salva o carrinho a caca vez que adicionar item ao carrinho
