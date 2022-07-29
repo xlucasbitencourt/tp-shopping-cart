@@ -158,15 +158,23 @@ body {
 
 .cart .cart__items {
   height: 70vh;
+  margin-bottom: 20px;
   overflow-y: scroll;
 }
 
+.cart span {
+  font-size: 20px;
+  text-align: center;
+}
+
 .empty-cart {
+  border-radius: 10px;
+  color: var(--color-white);
   width: 170px;
   height: 35px;
-  margin: 0 auto;
-  border: 2px solid rgb(5, 52, 219);
-  background-color: rgb(249, 249, 246);
+  margin: 10px auto;
+  box-shadow: var(--boxDefault);
+  background-color: var(--color-secundary);
 }
 
 #lb {
