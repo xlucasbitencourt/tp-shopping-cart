@@ -23,10 +23,10 @@ const valorCarrinho = () => { // requisito 5
   const totalPrice = document.querySelector('.total-price'); // local onde será exibido o valor na página
   const item = document.querySelectorAll('.cart__item'); // constante para pegar itens do carrinho (tive que criar outra sei lá porque caralho)
   const total = Array.from(item) // total é uma array dos elementos produtos no carrinho
-  .reduce((a, pro) => a + (parseFloat(pro.innerHTML.split('|')[2] // tira os dados numéricos para compor o valor
-  .replace(' PRICE: $', ''))), 0); // substitui o proce para deixar o valor numérico
+  .reduce((a, pro) => a + (parseFloat(pro.innerHTML.split('Preço:')[1] // tira os dados numéricos para compor o valor
+  .replace(' R$', ''))), 0); // substitui o proce para deixar o valor numérico
   // .toFixed(2); // mostra somente 2 casas decimais
-  totalPrice.innerText = total; // coloca o valor na página
+  totalPrice.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`; // coloca o valor na página
 };
 
 function cartItemClickListener(event) { // requisito 3
@@ -38,17 +38,20 @@ function cartItemClickListener(event) { // requisito 3
 function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   const li = document.createElement('li');
   const img = document.createElement('img');
-  const prod = document.createElement('p');
+  // const prod = document.createElement('p');
+  const SKU = document.createElement('p');
+  const NAME = document.createElement('p');
+  const price = document.createElement('p');
   const apagar = document.createElement('button');
   img.src = thumbnail;
-  prod.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  SKU.innerText = `SKU: ${sku}`;
+  NAME.innerText = `Item: ${name}`;
+  price.innerText = `Preço: R$${salePrice.toFixed(2).replace('.', ',')}`;
+  // prod.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   apagar.innerText = 'Excluir';
   apagar.addEventListener('click', cartItemClickListener);
   li.className = 'cart__item';
-  li.append(img, prod, apagar);
-  // li.innerHTML = `<img src=${thumbnail} /> SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  // li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  // li.addEventListener('click', cartItemClickListener);
+  li.append(img, SKU, NAME, price, apagar);
   return li;
 }
 
