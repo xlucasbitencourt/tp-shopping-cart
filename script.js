@@ -25,12 +25,11 @@ const valorCarrinho = () => { // requisito 5
   const total = Array.from(item) // total é uma array dos elementos produtos no carrinho
   .reduce((a, pro) => a + (parseFloat(pro.innerHTML.split('Preço:')[1] // tira os dados numéricos para compor o valor
   .replace(' R$', ''))), 0); // substitui o proce para deixar o valor numérico
-  // .toFixed(2); // mostra somente 2 casas decimais
   totalPrice.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`; // coloca o valor na página
 };
 
 function cartItemClickListener(event) { // requisito 3
-  event.target.parentNode.remove(); // remove o local onde foi clicado (o escutador está na função abaixo)
+  event.target.parentNode.parentNode.remove(); // remove o local onde foi clicado (o escutador está na função abaixo)
   valorCarrinho(); // requisito 5
   saveCartItems(cartItems.innerHTML); // requisito 4 - salva o carrinho cada vez que remover item
 }
@@ -38,7 +37,7 @@ function cartItemClickListener(event) { // requisito 3
 function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   const li = document.createElement('li');
   const img = document.createElement('img');
-  // const prod = document.createElement('p');
+  const prod = document.createElement('div');
   const SKU = document.createElement('p');
   const NAME = document.createElement('p');
   const price = document.createElement('p');
@@ -47,11 +46,11 @@ function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   SKU.innerText = `SKU: ${sku}`;
   NAME.innerText = `Item: ${name}`;
   price.innerText = `Preço: R$${salePrice.toFixed(2).replace('.', ',')}`;
-  // prod.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   apagar.innerText = 'Excluir';
   apagar.addEventListener('click', cartItemClickListener);
+  prod.append(img, SKU, NAME, price, apagar);
   li.className = 'cart__item';
-  li.append(img, SKU, NAME, price, apagar);
+  li.append(prod);
   return li;
 }
 
