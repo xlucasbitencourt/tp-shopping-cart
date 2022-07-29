@@ -30,17 +30,25 @@ const valorCarrinho = () => { // requisito 5
 };
 
 function cartItemClickListener(event) { // requisito 3
-  event.target.remove(); // remove o local onde foi clicado (o escutador está na função abaixo)
+  event.target.parentNode.remove(); // remove o local onde foi clicado (o escutador está na função abaixo)
   valorCarrinho(); // requisito 5
   saveCartItems(cartItems.innerHTML); // requisito 4 - salva o carrinho cada vez que remover item
 }
 
 function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   const li = document.createElement('li');
+  const img = document.createElement('img');
+  const prod = document.createElement('p');
+  const apagar = document.createElement('button');
+  img.src = thumbnail;
+  prod.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  apagar.innerText = 'Excluir';
+  apagar.addEventListener('click', cartItemClickListener);
   li.className = 'cart__item';
-  li.innerHTML = `<img src=${thumbnail} /> SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.append(img, prod, apagar);
+  // li.innerHTML = `<img src=${thumbnail} /> SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   // li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
