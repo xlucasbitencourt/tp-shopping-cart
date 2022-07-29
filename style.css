@@ -6,6 +6,8 @@
 
   --boxDefault: rgba(3, 102, 214, 0.302) 0 0 0 3px;
 
+  --boxOption: var(--color-secundary) 0 0 0 3px;
+
   --color-primary: rgb(36, 29, 96);
 
   --color-secundary: rgb(168, 7, 24);
@@ -64,37 +66,13 @@ body {
   display: flex;
   align-items: center;
   background-color: var(--color-terciary);
-  width: 40%;
+  width: 25%;
   height: 100%;
   margin-left: 30px;
 }
 
 .container-cartTitle span {
   z-index: 1;
-}
-
-.container-cartTitle:after {
-  content: '';
-  position: absolute;
-  top: 15px;
-  right: 61.5%;
-  width: 39.5%;
-  height: 15px;
-  background: var(--color-secundary);
-  transform: skew(-45deg);
-  z-index: 0;
-}
-
-.container-cartTitle:before {
-  content: '';
-  position: absolute;
-  top: 30px;
-  right: 61.5%;
-  width: 39.5%;
-  height: 15px;
-  background: var(--color-secundary);
-  transform: skew(45deg);
-  z-index: 0;
 }
 
 .container-cartTitle .cart__title {
@@ -116,7 +94,7 @@ body {
 
 .items {
   display: flex;
-  flex-basis: 70%;
+  flex-basis: 75%;
   flex-wrap: wrap;
   justify-content: center;
   margin: 40px 0;
@@ -132,6 +110,11 @@ body {
   box-shadow: var(--boxDefault);
   border-radius: 5px;
   box-sizing: border-box;
+  transition: box-shadow 500ms;
+}
+
+.item:hover {
+  box-shadow: var(--color-secundary) 0 0 10px 5px;
 }
 
 .item .item__sku {
@@ -158,12 +141,17 @@ body {
   margin: 0;
   padding: 10px;
   color: white;
+  transition: all 0.5s;
+}
+
+.item .item__add:hover {
+  background-color: var(--color-primary);
 }
 
 .cart {
   background-color: var(--color-black);
   display: flex;
-  flex-basis: 32%;
+  flex-basis: 25%;
   flex-flow: column wrap;
   height: 100vh;
 }
@@ -189,11 +177,13 @@ body {
 
 .cart__item div {
   align-items: center;
-  box-shadow: var(--box1), var(--box2);
+  background-color: var(--color-primary);
+  box-shadow: var(--boxOption);
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  margin: 10px auto;
   padding: 10px;
+  width: 80%;
 }
 
 .cart__item p {
@@ -201,8 +191,21 @@ body {
 }
 
 .cart__item button {
-  margin: 10px 0;
+  background-color: var(--color-black);
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: var(--boxDefault);
+  box-sizing: border-box;
+  color: var(--color-white);
+  cursor: pointer;
+  font-size: 16px;
   height: 30px;
-  min-width: 60px;
-  width: 30%;
+  margin: 5px 10px;
+  padding: 0 1.6rem;
+  transition: all 0.5s;
+  touch-action: manipulation;
+}
+
+.cart__item button:hover {
+  box-shadow: var(--color-secundary) 0 0 10px 5px;
 }
