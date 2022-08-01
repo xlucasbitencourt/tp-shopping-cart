@@ -148,6 +148,13 @@ body {
   background-color: var(--color-primary);
 }
 
+.item p {
+  background-color: var(--color-primary);
+  font-size: 20px;
+  text-align: center;
+  padding: 2% 0;
+}
+
 .cart {
   background-color: var(--color-black);
   display: flex;
@@ -175,18 +182,21 @@ body {
   margin: 10px auto;
   box-shadow: var(--boxDefault);
   background-color: var(--color-secundary);
+  cursor: pointer;
 }
 
 #lb {
   color: white;
   font-size: 15px;
   margin: 10px;
+  text-decoration: none;
 }
 
 .cart__item div {
   align-items: center;
   background-color: var(--color-primary);
   box-shadow: var(--boxOption);
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   margin: 10px auto;

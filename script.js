@@ -45,7 +45,7 @@ function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   img.src = thumbnail;
   SKU.innerText = `SKU: ${sku}`;
   NAME.innerText = `Item: ${name}`;
-  price.innerText = `Preço: R$${salePrice.toFixed(2).replace('.', ',')}`;
+  price.innerText = `Preço: R$${salePrice.toFixed(2)}`;
   apagar.innerText = 'Excluir';
   apagar.addEventListener('click', cartItemClickListener);
   prod.append(img, SKU, NAME, price, apagar);
@@ -71,13 +71,14 @@ const restaura = () => { // requisito 4
   cart.forEach((a) => a.addEventListener('click', cartItemClickListener)); // coloca o escutador para conseguir exckuir o item do carrinho
 };
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ sku, name, image, price }) {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('p', '', `R$ ${price.toFixed(2).replace('.', ',')}`));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
   .addEventListener('click', adicionaCarrinho); // adiciona botão para executar função de colocar no carrinho
 
@@ -89,8 +90,8 @@ const mostraProdutos = async (busca) => { // requisito 1
   const lista = await fetchProducts(busca); // guarda o retorno da função criada no outro arquivo
   loading.remove(); // requisito 7 - remove a div carregando
   lista.results.forEach((alvo) => {
-    const { id: sku, title: name, thumbnail: image } = alvo; // desestrutura para colocar os nomes que estão na função acima
-    return items.appendChild(createProductItemElement({ sku, name, image })); // chama a função para gerar os items na página, como filhos do elemento de classe items
+    const { id: sku, title: name, thumbnail: image, price } = alvo; // desestrutura para colocar os nomes que estão na função acima
+    return items.appendChild(createProductItemElement({ sku, name, image, price })); // chama a função para gerar os items na página, como filhos do elemento de classe items
   });
   valorCarrinho(); // requisito 5
 };
